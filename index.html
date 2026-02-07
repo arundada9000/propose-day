@@ -38,7 +38,18 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="beating-heart">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="loader-text">Loading with love...</p>
+        </div>
+    </div>
+
     <div id="heart-container"></div>
+    <div id="petal-container"></div>
 
     <!-- Music Control -->
     <div id="music-toggle" onclick="toggleMusic()">
@@ -48,10 +59,18 @@
         <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Sound Effects -->
+    <audio id="sfx-pop" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sfx-whoosh" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+    </audio>
+
     <main class="container">
         <!-- Step 1: Realistic Envelope -->
         <section id="envelope-section" class="active">
-            <div class="envelope-container">
+            <div class="envelope-container envelope-entrance">
                 <div class="envelope" id="envelope" onclick="openEnvelope()">
                     <div class="envelope-back"></div>
                     <div class="letter" id="letter">
@@ -65,7 +84,7 @@
                     </div>
                     <div class="envelope-front"></div>
                     <div class="envelope-flap" id="envelope-flap">
-                        <div class="wax-seal" id="wax-seal">
+                        <div class="wax-seal" id="wax-seal" onclick="event.stopPropagation(); handleSealTap()">
                             <i class="fas fa-heart"></i>
                         </div>
                     </div>
@@ -74,6 +93,12 @@
                 <div class="seal-burst" id="seal-burst"></div>
             </div>
             <p class="instruction" id="envelope-instruction"><i class="fas fa-hand-pointer"></i> Tap the envelope</p>
+
+            <!-- Easter Egg Secret Message -->
+            <div class="secret-message hidden" id="secret-message">
+                <p>✨ You found a secret! ✨</p>
+                <p class="secret-text">I've loved you since day one 💕</p>
+            </div>
         </section>
 
         <!-- Step 2: Storytelling Cards -->
@@ -91,8 +116,10 @@
                     <p class="typewriter-body"
                         data-text="I wanted to take a moment to tell you something that's been on my heart for a long time...">
                     </p>
-                    <button class="next-btn hidden-btn" onclick="nextCard(1)">Next <i
-                            class="fas fa-arrow-right"></i></button>
+                    <div class="card-nav">
+                        <button class="next-btn hidden-btn" onclick="nextCard(1)">Next <i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
 
                 <div class="card hidden" id="card-2">
@@ -101,8 +128,11 @@
                     <p class="typewriter-body"
                         data-text="You make my world a little brighter just by being in it. Your smile is my favorite view.">
                     </p>
-                    <button class="next-btn hidden-btn" onclick="nextCard(2)">Go on... <i
-                            class="fas fa-arrow-right"></i></button>
+                    <div class="card-nav">
+                        <button class="back-btn" onclick="prevCard(2)"><i class="fas fa-arrow-left"></i></button>
+                        <button class="next-btn hidden-btn" onclick="nextCard(2)">Go on... <i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
 
                 <!-- Reasons I Love You Card -->
@@ -123,8 +153,11 @@
                         <div class="reason"><i class="fas fa-heart"></i> <span>You make ordinary days magical</span>
                         </div>
                     </div>
-                    <button class="next-btn reasons-btn" onclick="nextCard(3)">And so... <i
-                            class="fas fa-arrow-right"></i></button>
+                    <div class="card-nav">
+                        <button class="back-btn" onclick="prevCard(3)"><i class="fas fa-arrow-left"></i></button>
+                        <button class="next-btn reasons-btn" onclick="nextCard(3)">And so... <i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
 
                 <div class="card hidden" id="card-4">
@@ -132,8 +165,11 @@
                     <h2 class="typewriter" data-text="And today..."></h2>
                     <p class="typewriter-body"
                         data-text="On this beautiful Propose Day, I couldn't wait any longer to ask you..."></p>
-                    <button class="next-btn hidden-btn special-btn" onclick="nextCard(4)">Ask me! <i
-                            class="fas fa-wand-magic-sparkles"></i></button>
+                    <div class="card-nav">
+                        <button class="back-btn" onclick="prevCard(4)"><i class="fas fa-arrow-left"></i></button>
+                        <button class="next-btn hidden-btn special-btn" onclick="nextCard(4)">Ask me! <i
+                                class="fas fa-wand-magic-sparkles"></i></button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -162,7 +198,7 @@
         <section id="celebration-section" class="hidden">
             <canvas id="confetti"></canvas>
             <div class="celebration-content">
-                <div class="love-certificate">
+                <div class="love-certificate" id="certificate" onclick="handleCertificateTap()">
                     <i class="fas fa-certificate seal-icon"></i>
                     <h1>Certificate of Love</h1>
                     <p class="cert-text">This certifies that</p>
@@ -171,8 +207,10 @@
                     <p class="date-text">Feb 8, 2026</p>
                     <div class="signature">
                         <p>Yours Forever</p>
-                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart cert-heart" id="cert-heart"></i>
                     </div>
+                    <!-- Hidden easter egg message -->
+                    <p class="hidden-love-msg hidden" id="hidden-love-msg">I love you to infinity and beyond! 💕</p>
                 </div>
                 <button class="restart-btn" onclick="location.reload()">Replay <i class="fas fa-redo"></i></button>
             </div>
