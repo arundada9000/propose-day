@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be Mine? ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="heart-container"></div>
+
+    <main class="container">
+        <!-- Step 1: Envelope -->
+        <section id="envelope-section" class="active">
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="openEnvelope()">
+                    <div class="flap"></div>
+                    <div class="pocket"></div>
+                    <div class="letter">
+                        <p>Open Me ✨</p>
+                    </div>
+                </div>
+            </div>
+            <p class="instruction">Tap the envelope</p>
+        </section>
+
+        <!-- Step 2: Message Cards -->
+        <section id="cards-section" class="hidden">
+            <div class="card-stack">
+                <div class="card" id="card-1">
+                    <h2>Hey You... 😊</h2>
+                    <p>I've been thinking about something for a while now.</p>
+                    <button onclick="nextCard(1)">Next ➡️</button>
+                </div>
+                <div class="card hidden" id="card-2">
+                    <h2>Every moment...</h2>
+                    <p>Since the day we met, you've made my life so much brighter.</p>
+                    <button onclick="nextCard(2)">Next ➡️</button>
+                </div>
+                <div class="card hidden" id="card-3">
+                    <h2>And today...</h2>
+                    <p>Since it's Propose Day, I wanted to tell you something special...</p>
+                    <button onclick="nextCard(3)">Tell me! ✨</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: The Proposal -->
+        <section id="proposal-section" class="hidden">
+            <div class="proposal-card">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyeG90eWZ4eGZyeHFueHhyeHFueHhyeHFueHhyeHFueHhyeHFueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v2pD4v6j59R7npx9Bv/giphy.gif" alt="Cute Panda" class="panda">
+                <h1>Will you be mine?</h1>
+                <div class="btn-group">
+                    <button id="yes-btn" onclick="celebrate()">YES! ❤️</button>
+                    <button id="no-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">No 😢</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Celebration -->
+        <section id="celebration-section" class="hidden">
+            <div class="celebration-content">
+                <canvas id="confetti"></canvas>
+                <h1>Yay! I love you! ❤️</h1>
+                <p>You've made me the happiest person alive! ✨</p>
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyeG90eWZ4eGZyeHFueHhyeHFueHhyeHFueHhyeHFueHhyeHFueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v2pD4v6j59R7npx9Bv/giphy.gif" alt="Happy Panda" class="panda">
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
