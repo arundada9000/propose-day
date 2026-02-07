@@ -1,10 +1,46 @@
 function openEnvelope() {
-    const envelopeSection = document.getElementById('envelope-section');
-    const cardsSection = document.getElementById('cards-section');
+    const envelope = document.querySelector('.envelope-outer');
+    envelope.classList.add('open');
 
-    envelopeSection.classList.add('hidden');
-    cardsSection.classList.remove('hidden');
-    createHearts();
+    setTimeout(() => {
+        document.getElementById('envelope-section').classList.add('hidden');
+        document.getElementById('cards-section').classList.remove('hidden');
+        startCardSequence(1);
+    }, 1500);
+
+    createAtmosphere();
+}
+
+function startCardSequence(cardNumber) {
+    const card = document.getElementById(`card-${cardNumber}`);
+    const h2 = card.querySelector('.typewriter');
+    const p = card.querySelector('.typewriter-body');
+    const button = card.querySelector('.next-btn');
+
+    // Reset visibility
+    button.classList.add('hidden-btn');
+
+    typeEffect(h2, h2.getAttribute('data-text'), 70, () => {
+        typeEffect(p, p.getAttribute('data-text'), 30, () => {
+            button.classList.remove('hidden-btn');
+        });
+    });
+}
+
+function typeEffect(element, text, speed, callback) {
+    let i = 0;
+    element.innerHTML = "";
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        } else if (callback) {
+            callback();
+        }
+    }
+    type();
 }
 
 function nextCard(current) {
@@ -15,6 +51,7 @@ function nextCard(current) {
 
     if (nextCard) {
         nextCard.classList.remove('hidden');
+        startCardSequence(current + 1);
     } else {
         document.getElementById('cards-section').classList.add('hidden');
         document.getElementById('proposal-section').classList.remove('hidden');
@@ -37,29 +74,29 @@ function celebrate() {
     startConfetti();
 }
 
-// Floating Hearts Effect
-function createHearts() {
-    const container = document.getElementById('heart-container');
-    const heartSymbols = ['❤️', '💖', '💝', '💗', '💓'];
+// Floating Hearts & Petals (Using FontAwesome)
+function createAtmosphere() {
+    const heartContainer = document.getElementById('heart-container');
+    const icons = ['fa-heart', 'fa-heart-pulse', 'fa-leaf']; // fa-leaf for petal feel
 
     setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        heart.style.opacity = Math.random();
-        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        const icon = document.createElement('i');
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
 
-        container.appendChild(heart);
+        icon.className = `fas ${randomIcon} heart-float`;
+        icon.style.left = Math.random() * 100 + 'vw';
+        icon.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        icon.style.color = randomIcon === 'fa-leaf' ? '#ffccd5' : '#ff4d6d';
+        icon.style.animationDuration = (Math.random() * 5 + 5) + 's';
+
+        heartContainer.appendChild(icon);
 
         setTimeout(() => {
-            heart.remove();
-        }, 5000);
-    }, 300);
+            icon.remove();
+        }, 10000);
+    }, 400);
 }
 
-// Simple Canvas Confetti (Alternative to external library to keep it lightweight)
 function startConfetti() {
     const canvas = document.getElementById('confetti');
     const ctx = canvas.getContext('2d');
@@ -67,37 +104,38 @@ function startConfetti() {
     canvas.height = window.innerHeight;
 
     let particles = [];
-    const colors = ['#FF7F50', '#FF1493', '#FFE4E1', '#FFF0F5', '#FFD700'];
+    const colors = ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd700', '#ffffff'];
 
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 200; i++) {
         particles.push({
             x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
-            size: Math.random() * 5 + 5,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 4 + 2,
             color: colors[Math.floor(Math.random() * colors.length)],
-            speed: Math.random() * 3 + 2,
-            angle: Math.random() * 360
+            speedX: Math.random() * 3 - 1.5,
+            speedY: Math.random() * 3 + 2,
+            opacity: Math.random()
         });
     }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
-            p.y += p.speed;
-            p.angle += 1;
+            p.y += p.speedY;
+            p.x += p.speedX;
+
             ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.opacity;
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
             ctx.fill();
 
-            if (p.y > canvas.height) p.y = -10;
+            if (p.y > canvas.height) {
+                p.y = -10;
+                p.x = Math.random() * canvas.width;
+            }
         });
         requestAnimationFrame(animate);
     }
     animate();
 }
-
-// Initial hearts for atmosphere
-window.onload = () => {
-    // Optional: Start a slow heart float even at the start
-};

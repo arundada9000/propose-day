@@ -1,10 +1,11 @@
 :root {
-    --primary: #FF7F50;
-    --secondary: #FFE4E1;
-    --bg: #FFF0F5;
-    --accent: #FF1493;
-    --text: #4A4A4A;
-    --glass: rgba(255, 255, 255, 0.8);
+    --primary: #d42d2d;
+    --paper: #f9f4e8;
+    --wax: #b22222;
+    --bg: #fff5f5;
+    --accent: #ff4d6d;
+    --text: #5e1c1c;
+    --glass: rgba(255, 250, 250, 0.85);
 }
 
 * {
@@ -17,178 +18,307 @@ body {
     font-family: 'Quicksand', sans-serif;
     background-color: var(--bg);
     color: var(--text);
-    overflow-x: hidden;
+    overflow: hidden;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-h1, h2 {
-    font-family: 'Dancing Script', cursive;
-    color: var(--accent);
-    margin-bottom: 1rem;
+/* Background Atmosphere */
+#heart-container,
+#petal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .container {
     width: 90%;
-    max-width: 500px;
+    max-width: 450px;
+    position: relative;
     z-index: 10;
-    text-align: center;
 }
 
 .hidden {
     display: none !important;
 }
 
-/* Envelope Styles */
-.envelope-wrapper {
-    position: relative;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.envelope {
-    position: relative;
-    width: 250px;
-    height: 150px;
-    background-color: var(--primary);
+/* Love Letter & Envelope Redesign */
+.letter-wrapper {
+    perspective: 1000px;
     margin: 0 auto;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 300px;
+    height: 200px;
 }
 
-.flap {
+.envelope-outer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #e0d0c0;
+    cursor: pointer;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    transition: transform 0.6s;
+}
+
+.flap-top {
     position: absolute;
     top: 0;
     width: 0;
     height: 0;
-    border-left: 125px solid transparent;
-    border-right: 125px solid transparent;
-    border-bottom: 80px solid var(--primary);
-    transform-origin: top;
-    transition: transform 0.4s ease;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 110px solid #d4c0ae;
     z-index: 3;
+    transform-origin: top;
+    transition: transform 0.5s ease-in-out;
 }
 
-.envelope-wrapper:hover .flap {
-    transform: rotateX(180deg);
-}
-
-.pocket {
+.wax-seal {
     position: absolute;
-    bottom: 0;
-    width: 250px;
-    height: 150px;
-    background-color: var(--primary);
-    border-radius: 0 0 10px 10px;
-    z-index: 2;
-}
-
-.letter {
-    position: absolute;
-    bottom: 0;
-    left: 10px;
-    width: 230px;
-    height: 130px;
-    background-color: #fff;
-    border-radius: 5px;
-    transition: transform 0.4s ease;
-    z-index: 1;
+    top: 90px;
+    left: 125px;
+    width: 50px;
+    height: 50px;
+    background: var(--wax);
+    border-radius: 50%;
+    z-index: 4;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s, opacity 0.5s;
 }
 
-.envelope-wrapper:hover .letter {
-    transform: translateY(-80px);
-}
-
-.letter p {
+.wax-seal i {
     font-size: 1.2rem;
-    color: var(--accent);
-    font-weight: 600;
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 110px;
+    background: #e0d0c0;
+    z-index: 2;
+    border-radius: 0 0 4px 4px;
+}
+
+.letter-preview {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: 160px;
+    background: var(--paper);
+    z-index: 1;
+    transform: translateY(0);
+    transition: transform 0.6s ease-in-out;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.handwritten {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: var(--text);
+}
+
+/* Letter Opening Animation */
+.envelope-outer.open .flap-top {
+    transform: rotateX(180deg);
+}
+
+.envelope-outer.open .wax-seal {
+    opacity: 0;
+    transform: scale(1.5);
+}
+
+.envelope-outer.open .letter-preview {
+    transform: translateY(-120px);
 }
 
 .instruction {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #888;
-    animation: bounce 2s infinite;
+    margin-top: 40px;
+    text-align: center;
+    color: var(--accent);
+    font-weight: 600;
+    animation: pulse 2s infinite;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-10px);}
-    60% {transform: translateY(-5px);}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
 }
 
-/* Card Styles */
+/* Card Styles & Typewriter */
 .card {
     background: var(--glass);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid rgba(255,255,255,0.3);
-    animation: slideUp 0.6s ease;
+    backdrop-filter: blur(8px);
+    padding: 40px 30px;
+    border-radius: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 50px rgba(255, 77, 109, 0.1);
+    text-align: center;
 }
 
-@keyframes slideUp {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-button {
-    background-color: var(--accent);
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    margin: 10px;
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-/* Proposal Screen */
-.panda {
-    width: 150px;
+.icon-header {
+    font-size: 2.5rem;
+    color: var(--accent);
     margin-bottom: 20px;
 }
 
-.btn-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.typewriter-body {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    min-height: 80px;
+}
+
+.next-btn {
+    margin-top: 25px;
+    background: var(--accent);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+    transition: transform 0.2s, opacity 0.5s;
+}
+
+.hidden-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Proposal Screen */
+.proposal-card {
+    background: white;
+    padding: 40px;
+    border-radius: 40px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+.panda {
+    width: 180px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+}
+
+#yes-btn {
+    background: #ff4d6d;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    animation: heartBeat 1.5s infinite;
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    14% {
+        transform: scale(1.1);
+    }
+
+    28% {
+        transform: scale(1);
+    }
+
+    42% {
+        transform: scale(1.1);
+    }
+
+    70% {
+        transform: scale(1);
+    }
 }
 
 #no-btn {
-    background-color: #999;
-    position: relative;
-    z-index: 5;
+    background: #a9a9a9;
+    padding: 12px 25px;
 }
 
-/* Heart Animation */
-.heart {
-    position: fixed;
-    font-size: 20px;
+/* Celebration */
+.celebration-visuals {
+    animation: zoomIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.big-yay {
+    font-size: 3rem;
     color: var(--accent);
-    user-select: none;
+    margin: 20px 0;
+}
+
+.ring-icon {
+    font-size: 4rem;
+    color: gold;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Floating Elements */
+.heart-float,
+.petal-float {
+    position: fixed;
     pointer-events: none;
-    animation: floatUp linear infinite;
     z-index: 1;
+    animation: floatUp linear forwards;
 }
 
 @keyframes floatUp {
-    from { transform: translateY(100vh) scale(1); opacity: 0.8; }
-    to { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    from {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.8;
+    }
+
+    to {
+        transform: translateY(-20vh) rotate(360deg);
+        opacity: 0;
+    }
 }

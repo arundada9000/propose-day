@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be Mine? ❤️</title>
+    <title>A Special Message for You ❤️</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div id="heart-container"></div>
+    <div id="petal-container"></div>
 
     <main class="container">
-        <!-- Step 1: Envelope -->
+        <!-- Step 1: Realistic Love Letter -->
         <section id="envelope-section" class="active">
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="openEnvelope()">
-                    <div class="flap"></div>
-                    <div class="pocket"></div>
-                    <div class="letter">
-                        <p>Open Me ✨</p>
+            <div class="letter-wrapper">
+                <div class="envelope-outer" onclick="openEnvelope()">
+                    <div class="flap-top"></div>
+                    <div class="wax-seal">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="envelope-front"></div>
+                    <div class="letter-preview">
+                        <div class="paper-texture"></div>
+                        <p class="handwritten">To my dearest...</p>
                     </div>
                 </div>
             </div>
-            <p class="instruction">Tap the envelope</p>
+            <p class="instruction"><i class="fas fa-hand-pointer"></i> Tap to open your letter</p>
         </section>
 
-        <!-- Step 2: Message Cards -->
+        <!-- Step 2: Storytelling Cards with Typewriter Effect -->
         <section id="cards-section" class="hidden">
             <div class="card-stack">
-                <div class="card" id="card-1">
-                    <h2>Hey You... 😊</h2>
-                    <p>I've been thinking about something for a while now.</p>
-                    <button onclick="nextCard(1)">Next ➡️</button>
+                <div class="card active-card" id="card-1">
+                    <div class="icon-header"><i class="fas fa-stars"></i></div>
+                    <h2 class="typewriter" data-text="Hey You... 😊"></h2>
+                    <p class="typewriter-body"
+                        data-text="I wanted to take a moment to tell you something that's been on my heart for a long time...">
+                    </p>
+                    <button class="next-btn hidden-btn" onclick="nextCard(1)">Next <i
+                            class="fas fa-arrow-right"></i></button>
                 </div>
+
                 <div class="card hidden" id="card-2">
-                    <h2>Every moment...</h2>
-                    <p>Since the day we met, you've made my life so much brighter.</p>
-                    <button onclick="nextCard(2)">Next ➡️</button>
+                    <div class="icon-header"><i class="fas fa-cloud-moon"></i></div>
+                    <h2 class="typewriter" data-text="Every single day..."></h2>
+                    <p class="typewriter-body"
+                        data-text="You make my world a little brighter just by being in it. Your smile is my favorite view.">
+                    </p>
+                    <button class="next-btn hidden-btn" onclick="nextCard(2)">Go on... <i
+                            class="fas fa-arrow-right"></i></button>
                 </div>
+
                 <div class="card hidden" id="card-3">
-                    <h2>And today...</h2>
-                    <p>Since it's Propose Day, I wanted to tell you something special...</p>
-                    <button onclick="nextCard(3)">Tell me! ✨</button>
+                    <div class="icon-header"><i class="fas fa-dove"></i></div>
+                    <h2 class="typewriter" data-text="And today..."></h2>
+                    <p class="typewriter-body"
+                        data-text="On this beautiful Propose Day, I couldn't wait any longer to ask you..."></p>
+                    <button class="next-btn hidden-btn" onclick="nextCard(3)">Ask me! <i
+                            class="fas fa-sparkles"></i></button>
                 </div>
             </div>
         </section>
@@ -51,11 +75,17 @@
         <!-- Step 3: The Proposal -->
         <section id="proposal-section" class="hidden">
             <div class="proposal-card">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyeG90eWZ4eGZyeHFueHhyeHFueHhyeHFueHhyeHFueHhyeHFueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v2pD4v6j59R7npx9Bv/giphy.gif" alt="Cute Panda" class="panda">
-                <h1>Will you be mine?</h1>
+                <div class="floating-icons">
+                    <i class="fas fa-heart floating-1"></i>
+                    <i class="fas fa-heart floating-2"></i>
+                </div>
+                <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnYybG16bmVqYXJ5bnYybG16bmVqYXJ5bnYybG16bmVqYXJ5bnYmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PXM/v2pD4v6j59R7npx9Bv/giphy.gif"
+                    alt="Cute Panda" class="panda">
+                <h1 class="proposal-text">Will you be my forever?</h1>
                 <div class="btn-group">
-                    <button id="yes-btn" onclick="celebrate()">YES! ❤️</button>
-                    <button id="no-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">No 😢</button>
+                    <button id="yes-btn" onclick="celebrate()">YES! <i class="fas fa-heart"></i></button>
+                    <button id="no-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">No <i
+                            class="fas fa-face-frown"></i></button>
                 </div>
             </div>
         </section>
@@ -64,13 +94,20 @@
         <section id="celebration-section" class="hidden">
             <div class="celebration-content">
                 <canvas id="confetti"></canvas>
-                <h1>Yay! I love you! ❤️</h1>
-                <p>You've made me the happiest person alive! ✨</p>
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyeG90eWZ4eGZyeHFueHhyeHFueHhyeHFueHhyeHFueHhyeHFueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v2pD4v6j59R7npx9Bv/giphy.gif" alt="Happy Panda" class="panda">
+                <div class="celebration-visuals">
+                    <i class="fas fa-ring ring-icon"></i>
+                    <h1 class="big-yay">Yay! I'm yours! ❤️</h1>
+                    <p>I promise to love you more every single day. ✨</p>
+                    <div class="panda-wrapper">
+                        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWVyeHhqeHhyeHhyeHhyeHhyeHhyeHhyeHhyeHhyeHhyeHhyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v2pD4v6j59R7npx9Bv/giphy.gif"
+                            alt="Happy Panda" class="panda">
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <script src="script.js"></script>
 </body>
+
 </html>
