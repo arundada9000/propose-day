@@ -3,47 +3,91 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Message for You ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Primary Meta Tags -->
+    <title>A Special Message for You ❤️ | Propose Day</title>
+    <meta name="title" content="A Special Message for You ❤️">
+    <meta name="description" content="A cute, romantic digital love letter and proposal experience. Created with love.">
+    <meta name="theme-color" content="#ff4d6d">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="A Special Message for You ❤️">
+    <meta property="og:description" content="A cute, romantic digital love letter and proposal experience.">
+    <meta property="og:image" content="./assets/propose-day.webp">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A Special Message for You ❤️">
+    <meta name="twitter:description" content="A cute, romantic digital love letter and proposal experience.">
+    <meta name="twitter:image" content="./assets/propose-day.webp">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="./assets/propose-day.webp">
+    <link rel="apple-touch-icon" href="./assets/propose-day.webp">
+
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
         rel="stylesheet">
-    <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <div id="heart-container"></div>
-    <div id="petal-container"></div>
+
+    <!-- Music Control -->
+    <div id="music-toggle" onclick="toggleMusic()">
+        <i class="fas fa-volume-mute" id="music-icon"></i>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 
     <main class="container">
-        <!-- Step 1: Realistic Love Letter -->
+        <!-- Step 1: Realistic Envelope -->
         <section id="envelope-section" class="active">
-            <div class="letter-wrapper">
-                <div class="envelope-outer" onclick="openEnvelope()">
-                    <div class="flap-top"></div>
-                    <div class="wax-seal">
-                        <i class="fas fa-heart"></i>
+            <div class="envelope-container">
+                <div class="envelope" id="envelope" onclick="openEnvelope()">
+                    <div class="envelope-back"></div>
+                    <div class="letter" id="letter">
+                        <p class="letter-heading">To My Dearest...</p>
+                        <p class="letter-body">There's something I need to tell you...</p>
+                        <p class="letter-footer">~ With all my love ~</p>
+                        <button class="letter-btn hidden" id="letter-btn"
+                            onclick="event.stopPropagation(); goToCards()">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                     <div class="envelope-front"></div>
-                    <div class="letter-preview">
-                        <div class="paper-texture"></div>
-                        <p class="handwritten">To my dearest...</p>
+                    <div class="envelope-flap" id="envelope-flap">
+                        <div class="wax-seal" id="wax-seal">
+                            <i class="fas fa-heart"></i>
+                        </div>
                     </div>
                 </div>
+                <!-- Hearts that burst from seal -->
+                <div class="seal-burst" id="seal-burst"></div>
             </div>
-            <p class="instruction"><i class="fas fa-hand-pointer"></i> Tap to open your letter</p>
+            <p class="instruction" id="envelope-instruction"><i class="fas fa-hand-pointer"></i> Tap the envelope</p>
         </section>
 
-        <!-- Step 2: Storytelling Cards with Typewriter Effect -->
+        <!-- Step 2: Storytelling Cards -->
         <section id="cards-section" class="hidden">
+            <div class="progress-dots">
+                <span class="dot active" data-card="1"></span>
+                <span class="dot" data-card="2"></span>
+                <span class="dot" data-card="3"></span>
+                <span class="dot" data-card="4"></span>
+            </div>
             <div class="card-stack">
-                <div class="card active-card" id="card-1">
-                    <div class="icon-header"><i class="fas fa-stars"></i></div>
-                    <h2 class="typewriter" data-text="Hey You... 😊"></h2>
+                <div class="card" id="card-1">
+                    <div class="icon-header"><i class="fas fa-star"></i></div>
+                    <h2 class="typewriter" data-text="Hey You..."></h2>
                     <p class="typewriter-body"
                         data-text="I wanted to take a moment to tell you something that's been on my heart for a long time...">
                     </p>
@@ -52,7 +96,7 @@
                 </div>
 
                 <div class="card hidden" id="card-2">
-                    <div class="icon-header"><i class="fas fa-cloud-moon"></i></div>
+                    <div class="icon-header"><i class="fas fa-moon"></i></div>
                     <h2 class="typewriter" data-text="Every single day..."></h2>
                     <p class="typewriter-body"
                         data-text="You make my world a little brighter just by being in it. Your smile is my favorite view.">
@@ -61,13 +105,35 @@
                             class="fas fa-arrow-right"></i></button>
                 </div>
 
-                <div class="card hidden" id="card-3">
-                    <div class="icon-header"><i class="fas fa-dove"></i></div>
+                <!-- Reasons I Love You Card -->
+                <div class="card hidden reasons-card" id="card-3">
+                    <div class="icon-header"><i class="fas fa-heart"></i></div>
+                    <h2>Reasons I Love You</h2>
+                    <div class="reasons-list" id="reasons-list">
+                        <div class="reason"><i class="fas fa-heart"></i> <span>Your smile lights up my world</span>
+                        </div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>You make me laugh like no one else</span>
+                        </div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>Your kindness inspires me</span></div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>You believe in me always</span></div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>Every moment with you is precious</span>
+                        </div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>You're my best friend</span></div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>Your hugs feel like home</span></div>
+                        <div class="reason"><i class="fas fa-heart"></i> <span>You make ordinary days magical</span>
+                        </div>
+                    </div>
+                    <button class="next-btn reasons-btn" onclick="nextCard(3)">And so... <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="card hidden" id="card-4">
+                    <div class="icon-header special-icon"><i class="fas fa-dove"></i></div>
                     <h2 class="typewriter" data-text="And today..."></h2>
                     <p class="typewriter-body"
                         data-text="On this beautiful Propose Day, I couldn't wait any longer to ask you..."></p>
-                    <button class="next-btn hidden-btn" onclick="nextCard(3)">Ask me! <i
-                            class="fas fa-sparkles"></i></button>
+                    <button class="next-btn hidden-btn special-btn" onclick="nextCard(4)">Ask me! <i
+                            class="fas fa-wand-magic-sparkles"></i></button>
                 </div>
             </div>
         </section>
@@ -75,34 +141,40 @@
         <!-- Step 3: The Proposal -->
         <section id="proposal-section" class="hidden">
             <div class="proposal-card">
-                <div class="floating-icons">
-                    <i class="fas fa-heart floating-1"></i>
-                    <i class="fas fa-heart floating-2"></i>
+                <div class="floating-hearts">
+                    <i class="fas fa-heart float-1"></i>
+                    <i class="fas fa-heart float-2"></i>
+                    <i class="fas fa-heart float-3"></i>
                 </div>
-                <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnYybG16bmVqYXJ5bnYybG16bmVqYXJ5bnYybG16bmVqYXJ5bnYmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PXM/v2pD4v6j59R7npx9Bv/giphy.gif"
-                    alt="Cute Panda" class="panda">
+                <!-- Reliable Tenor GIF -->
+                <img src="https://media.tenor.com/images/2a513f1d62de8a6bfaf3a0e5d7b20d48/tenor.gif" alt="Cute bear"
+                    class="panda" onerror="this.style.display='none'">
                 <h1 class="proposal-text">Will you be my forever?</h1>
                 <div class="btn-group">
                     <button id="yes-btn" onclick="celebrate()">YES! <i class="fas fa-heart"></i></button>
-                    <button id="no-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">No <i
-                            class="fas fa-face-frown"></i></button>
+                    <button id="no-btn" onmouseover="moveNoButton()" ontouchstart="moveNoButton()">No <i
+                            class="fas fa-face-sad-tear"></i></button>
                 </div>
             </div>
         </section>
 
         <!-- Final Celebration -->
         <section id="celebration-section" class="hidden">
+            <canvas id="confetti"></canvas>
             <div class="celebration-content">
-                <canvas id="confetti"></canvas>
-                <div class="celebration-visuals">
-                    <i class="fas fa-ring ring-icon"></i>
-                    <h1 class="big-yay">Yay! I'm yours! ❤️</h1>
-                    <p>I promise to love you more every single day. ✨</p>
-                    <div class="panda-wrapper">
-                        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWVyeHhqeHhyeHhyeHhyeHhyeHhyeHhyeHhyeHhyeHhyeHhyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v2pD4v6j59R7npx9Bv/giphy.gif"
-                            alt="Happy Panda" class="panda">
+                <div class="love-certificate">
+                    <i class="fas fa-certificate seal-icon"></i>
+                    <h1>Certificate of Love</h1>
+                    <p class="cert-text">This certifies that</p>
+                    <h2 class="couple-text">We are officially</h2>
+                    <h1 class="forever-text">Forever Together</h1>
+                    <p class="date-text">Feb 8, 2026</p>
+                    <div class="signature">
+                        <p>Yours Forever</p>
+                        <i class="fas fa-heart"></i>
                     </div>
                 </div>
+                <button class="restart-btn" onclick="location.reload()">Replay <i class="fas fa-redo"></i></button>
             </div>
         </section>
     </main>
